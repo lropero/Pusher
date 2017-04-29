@@ -1,2 +1,2 @@
-# pusher
-Radio song pusher
+# Trece.fm songlist pusher
+Songlist pusher using Trece.fm's API
