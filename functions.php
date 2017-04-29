@@ -50,4 +50,3 @@ function imageResize($src, $dst, $dst_width = 0, $dst_height = 0, $crop = false)
 	}
 	return false;
 }
-?>
