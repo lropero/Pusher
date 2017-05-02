@@ -123,10 +123,14 @@ class Pusher {
 				mysql_query($sql);
 			}
 
+			$sql1 = 'SELECT songID, artist, title, album, picture FROM historylist WHERE duration > 60000 ORDER BY ID DESC LIMIT 6';
+			$sql2 = 'SELECT songlist.ID as songID, songlist.artist, songlist.title, songlist.album, songlist.picture FROM queuelist, songlist WHERE queuelist.songID = songlist.ID AND songlist.duration > 60000 ORDER BY queuelist.sortID LIMIT 5';
+
+			$result1 = mysql_query($sql1);
+			$result2 = mysql_query($sql2);
+
 			$history = array();
-			$sql = 'SELECT songID, artist, title, album, picture FROM historylist WHERE duration > 60000 ORDER BY ID DESC LIMIT 6';
-			$result = mysql_query($sql);
-			while($row = mysql_fetch_assoc($result)) {
+			while($row = mysql_fetch_assoc($result1)) {
 				$song = $this->getSong($row);
 				if($song) {
 					if(!isset($now)) {
@@ -138,9 +142,7 @@ class Pusher {
 			}
 
 			$queue = array();
-			$sql = 'SELECT songlist.ID as songID, songlist.artist, songlist.title, songlist.album, songlist.picture FROM queuelist, songlist WHERE queuelist.songID = songlist.ID AND songlist.duration > 60000 ORDER BY queuelist.sortID LIMIT 5';
-			$result = mysql_query($sql);
-			while($row = mysql_fetch_assoc($result)) {
+			while($row = mysql_fetch_assoc($result2)) {
 				$song = $this->getSong($row);
 				if($song) {
 					$queue[] = $song;
@@ -157,10 +159,10 @@ class Pusher {
 			return false;
 		}
 
-		$id = $row['songID'];
-		$artist = isset($row['artist']) ? ucwords(strtolower(trim($row['artist']))) : '';
-		$title = isset($row['title']) ? ucwords(strtolower(trim($row['title']))) : '';
-		$album = isset($row['album']) ? ucwords(strtolower(trim($row['album']))) : '';
+		$id = utf8_encode($row['songID']);
+		$artist = isset($row['artist']) ? utf8_encode(ucwords(strtolower(trim($row['artist'])))) : '';
+		$title = isset($row['title']) ? utf8_encode(ucwords(strtolower(trim($row['title'])))) : '';
+		$album = isset($row['album']) ? utf8_encode(ucwords(strtolower(trim($row['album'])))) : '';
 
 		$picture = isset($row['picture']) ? trim($row['picture']) : '';
 		if(strlen($picture)) {
