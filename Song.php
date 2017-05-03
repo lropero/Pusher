@@ -8,10 +8,10 @@ class Song {
 	private $cover;
 
 	public function __construct($id, $artist, $title, $album) {
-		$this->id = $id;
-		$this->artist = $artist;
-		$this->title = $title;
-		$this->album = $album;
+		$this->id = utf8_encode($id);
+		$this->artist = utf8_encode($artist);
+		$this->title = utf8_encode($title);
+		$this->album = utf8_encode($album);
 		$this->cover = '';
 	}
 
@@ -20,6 +20,6 @@ class Song {
 	}
 
 	public function setCover($cover) {
-		$this->cover = $cover;
+		$this->cover = utf8_encode($cover);
 	}
 }

@@ -159,10 +159,10 @@ class Pusher {
 			return false;
 		}
 
-		$id = utf8_encode($row['songID']);
-		$artist = isset($row['artist']) ? utf8_encode(ucwords(strtolower(trim($row['artist'])))) : '';
-		$title = isset($row['title']) ? utf8_encode(ucwords(strtolower(trim($row['title'])))) : '';
-		$album = isset($row['album']) ? utf8_encode(ucwords(strtolower(trim($row['album'])))) : '';
+		$id = $row['songID'];
+		$artist = isset($row['artist']) ? ucwords(strtolower(trim($row['artist']))) : '';
+		$title = isset($row['title']) ? ucwords(strtolower(trim($row['title']))) : '';
+		$album = isset($row['album']) ? ucwords(strtolower(trim($row['album']))) : '';
 
 		$picture = isset($row['picture']) ? trim($row['picture']) : '';
 		if(strlen($picture)) {
